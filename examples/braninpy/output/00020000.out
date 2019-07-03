@@ -1,0 +1,13 @@
+Running in wrapper mode for '20000'
+
+Running python job.
+
+Anything printed here will end up in the output directory for job #: 20000
+{'X': array([0.59186047, 0.66659561])}
+10.48072927063856
+Got result 10.480729
+
+Job file reloaded.
+Completed successfully in 0.01 seconds. [10.480729]
+setting job 20000 complete
+set...
