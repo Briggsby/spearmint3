@@ -4,18 +4,8 @@ import re
 import subprocess
 import drmaa
 
-# from dispatch import DispatchDriver
-from helpers  import *
-
-class DispatchDriver(object):
-    def submit_job(job):
-        '''Schedule a job for execution.'''
-        pass
-
-
-    def is_proc_alive(job_ids):
-        '''Check on the status of executing jobs.'''
-        pass
+from spearmint.driver.dispatch import DispatchDriver
+from spearmint.helpers  import *
 
 # TODO: figure out if these modules are necessary, or if they can be handled in
 # the matlab runner or a user script...

@@ -27,10 +27,10 @@ import _pickle as cPickle
 import numpy        as np
 import numpy.random as npr
 
-from spearmint_pb2 import *
-from Locker        import *
-from sobol_lib     import *
-from helpers       import *
+from spearmint.spearmint_pb2 import *
+from spearmint.Locker        import *
+from spearmint.sobol_lib     import *
+from spearmint.helpers       import *
 
 CANDIDATE_STATE = 0
 SUBMITTED_STATE = 1

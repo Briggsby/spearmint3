@@ -2,9 +2,9 @@ import sys
 import os
 import traceback
 
-from spearmint_pb2   import *
-from ExperimentGrid  import *
-from helpers         import *
+from spearmint.spearmint_pb2   import *
+from spearmint.ExperimentGrid  import *
+from spearmint.helpers         import *
 
 
 # System dependent modules

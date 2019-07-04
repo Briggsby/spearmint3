@@ -15,7 +15,7 @@ class SpearmintWebApp(Flask):
         self.experiment_dir = os.path.dirname(os.path.realpath(expt_config))
 
     def set_chooser(self, chooser_module, chooser):
-        module  = importlib.import_module('chooser.' + chooser_module)
+        module  = importlib.import_module('spearmint.chooser.' + chooser_module)
         self.chooser = chooser
 
     def experiment_grid(self):

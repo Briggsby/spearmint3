@@ -40,9 +40,9 @@ except ImportError: import json
 # from anywhere.
 sys.path.append(os.path.realpath(__file__))
 
-from ExperimentGrid  import *
-from helpers         import *
-from runner          import job_runner
+from spearmint.ExperimentGrid  import *
+from spearmint.helpers         import *
+from spearmint.runner          import job_runner
 
 # Use a global for the web process so we can kill it cleanly on exit
 web_proc = None
@@ -161,14 +161,14 @@ def main():
     check_experiment_dirs(expt_dir)
 
     # Load up the chooser module.
-    module  = importlib.import_module('chooser.' + options.chooser_module)
+    module  = importlib.import_module('spearmint.chooser.' + options.chooser_module)
     chooser = module.init(expt_dir, options.chooser_args)
 
     if options.web_status:
         web_proc = start_web_view(options, experiment_config, chooser)
 
     # Load up the job execution driver.
-    module = importlib.import_module('driver.' + options.driver)
+    module = importlib.import_module('spearmint.driver.' + options.driver)
     driver = module.init()
 
     # Loop until we run out of jobs.
