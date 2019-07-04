@@ -63,7 +63,7 @@ web_proc = None
 # submits them to the queueing system.
 
 
-def parse_args():
+def parse_args(args=None):
     parser = optparse.OptionParser(usage="\n\tspearmint [options] <experiment/config.pb>")
 
     parser.add_option("--max-concurrent", dest="max_concurrent",
@@ -104,7 +104,7 @@ def parse_args():
     parser.add_option("-v", "--verbose", action="store_true",
                       help="Print verbose debug output.")
 
-    (options, args) = parser.parse_args()
+    (options, args) = parser.parse_args(args)
 
     if len(args) == 0:
         parser.print_help()
@@ -141,8 +141,8 @@ def start_web_view(options, experiment_config, chooser):
     return proc
 
 
-def main():
-    (options, args) = parse_args()
+def main(args=None):
+    (options, args) = parse_args(args)
 
     if options.job:
         job_runner(load_job(options.job))
