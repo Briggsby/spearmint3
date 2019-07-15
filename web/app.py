@@ -68,9 +68,9 @@ def status():
                     sub_params[-1] += np.array_str(np.array(p.dbl_val))
                 if p.str_val:
                     sub_params[-1] += np.array_str(np.array(p.str_val))
-            all_params.append(',<br />'.join(sub_params).encode('ascii') +
+            all_params.append(',<br />'.join(sub_params) +
                               '</td></tr>')
-        all_params = Markup(' '.join(all_params))
+        all_params = Markup(' '.join(all_params).encode('ascii'))
 
         # If the chooser has a function generate_stats_html, then this
         # will be fed into the web display (as raw html).  This is handy
