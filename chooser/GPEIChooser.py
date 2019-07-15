@@ -29,7 +29,7 @@ import numpy.random   as npr
 import scipy.linalg   as spla
 import scipy.stats    as sps
 import scipy.optimize as spo
-import cPickle
+import _pickle as cPickle
 
 from spearmint.Locker  import *
 from spearmint.helpers import *
@@ -67,7 +67,7 @@ class GPEIChooser:
         self.locker.lock_wait(self.state_pkl)
 
         # Write the hyperparameters out to a Pickle.
-        fh = tempfile.NamedTemporaryFile(mode='w', delete=False)
+        fh = tempfile.NamedTemporaryFile(mode='wb', delete=False)
         cPickle.dump({ 'dims'   : self.D,
                        'ls'     : self.ls,
                        'amp2'   : self.amp2,
@@ -86,7 +86,7 @@ class GPEIChooser:
         self.locker.lock_wait(self.state_pkl)
 
         if os.path.exists(self.state_pkl):
-            fh    = open(self.state_pkl, 'r')
+            fh    = open(self.state_pkl, 'rb')
             state = cPickle.load(fh)
             fh.close()
 

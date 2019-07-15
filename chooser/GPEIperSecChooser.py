@@ -29,7 +29,7 @@ import numpy.random   as npr
 import scipy.linalg   as spla
 import scipy.stats    as sps
 import scipy.optimize as spo
-import cPickle
+import _pickle as cPickle
 
 from spearmint.helpers import *
 from spearmint.Locker  import *

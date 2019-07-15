@@ -30,7 +30,7 @@ import numpy.random   as npr
 import scipy.linalg   as spla
 import scipy.stats    as sps
 import scipy.optimize as spo
-import cPickle
+import _pickle as cPickle
 import matplotlib.pyplot as plt
 import multiprocessing
 import copy
