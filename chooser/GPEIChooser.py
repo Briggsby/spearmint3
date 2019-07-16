@@ -151,6 +151,7 @@ class GPEIChooser:
                 overall_ei[:,mcmc_iter] = self.compute_ei(comp, pend, cand, vals)
 
             best_cand = np.argmax(np.mean(overall_ei, axis=1))
+            log(f"Max mean EI: {max(np.mean(overall_ei, axis=1))}")
 
             return int(candidates[best_cand])
 
@@ -170,6 +171,8 @@ class GPEIChooser:
                                 np.max(self.ls)))
 
             ei = self.compute_ei(comp, pend, cand, vals)
+
+            log(f"Max EI: {max(ei)}")
 
             best_cand = np.argmax(ei)
 

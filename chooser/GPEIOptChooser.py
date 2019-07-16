@@ -56,7 +56,7 @@ class GPEIOptChooser:
 
     def __init__(self, expt_dir, covar="Matern52", mcmc_iters=10,
                  pending_samples=100, noiseless=False, burnin=100,
-                 grid_subset=20, use_multiprocessing=True):
+                 grid_subset=20, use_multiprocessing=True, eistop=0.0, jobstop=0):
         self.cov_func        = getattr(gp, covar)
         self.locker          = Locker()
         self.state_pkl       = os.path.join(expt_dir, self.__module__ + ".pkl")
@@ -71,6 +71,8 @@ class GPEIOptChooser:
         # Number of points to optimize EI over
         self.grid_subset     = int(grid_subset)
         self.noiseless       = bool(int(noiseless))
+        self.eistop          = float(eistop)
+        self.jobstop    = int(jobstop)
         self.hyper_samples = []
 
         self.noise_scale = 0.1  # horseshoe prior
@@ -215,7 +217,8 @@ class GPEIOptChooser:
     # corresponding objective 'values', pick from the next experiment to
     # run according to the acquisition function.
     def next(self, grid, values, durations,
-             candidates, pending, complete):
+             candidates, pending, complete,
+             web_proc=None):
 
         # Don't bother using fancy GP stuff at first.
         if complete.shape[0] < 2:
@@ -291,6 +294,18 @@ class GPEIOptChooser:
                 cand = np.vstack((cand, cand2))
 
             overall_ei = self.ei_over_hypers(comp,pend,cand,vals)
+            log(f"Max mean EI: {max(np.mean(overall_ei, axis=1))}")
+            if self.eistop == 0 or max(np.mean(overall_ei, axis=1)) < self.eistop:
+                print("EI stopping condition met")
+                if self.jobstop == 0 or complete.shape[0] >= self.jobstop:
+                    if self.jobstop != 0 or self.eistop != 0:
+                        print("Job stopping condition met")
+                        print("closing web server...")
+                        if web_proc:
+                            web_proc.terminate()
+                        print("done")
+                        os._exit(0)
+
             best_cand = np.argmax(np.mean(overall_ei, axis=1))
 
             if (best_cand >= numcand):
@@ -320,6 +335,18 @@ class GPEIOptChooser:
             cand = np.vstack((cand, cand2))
 
             ei = self.compute_ei(comp, pend, cand, vals)
+            log(f"Max EI: {max(ei)}")
+            if self.eistop == 0 or max(ei) < self.eistop:
+                print("EI stopping condition met")
+                if self.jobstop == 0 or complete.shape[0] >= self.jobstop:
+                    if self.jobstop != 0 or self.eistop != 0:
+                        print("Job stopping condition met")
+                        print("closing web server...")
+                        if web_proc:
+                            web_proc.terminate()
+                        print("done")
+                        os._exit(0)
+
             best_cand = np.argmax(ei)
 
             if (best_cand >= numcand):

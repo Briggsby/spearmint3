@@ -165,6 +165,7 @@ def main(args=None):
     chooser = module.init(expt_dir, options.chooser_args)
 
     if options.web_status:
+        global web_proc
         web_proc = start_web_view(options, experiment_config, chooser)
 
     # Load up the job execution driver.
@@ -251,7 +252,7 @@ def attempt_dispatch(expt_config, expt_dir, chooser, driver, options):
 
         # Ask the chooser to pick the next candidate
         log("Choosing next candidate... ")
-        job_id = chooser.next(grid, values, durations, candidates, pending, complete)
+        job_id = chooser.next(grid, values, durations, candidates, pending, complete, web_proc)
 
         # If the job_id is a tuple, then the chooser picked a new job.
         # We have to add this to our grid
